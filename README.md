@@ -1,4 +1,3 @@
-cat > README.md <<EOF
 # Proyecto de Desarrollo de Cliente para Force GYM Management
 
 Este es un proyecto basado en **React** utilizando **Vite**, **TypeScript** y **Tailwindcss** para un desarrollo rápido y eficiente.
