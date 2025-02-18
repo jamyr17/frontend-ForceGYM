@@ -13,38 +13,38 @@ Se debe instalar:
 
 Clonar este repositorio y ejecutar el siguiente comando en la terminal para instalar las dependencias:
 
-\`\`\`sh
+```
 npm install
-\`\`\`
+```
 
 ## Ejecución del proyecto
 
 Para iniciar el entorno de desarrollo, se debe usar el siguiente comando:
 
-\`\`\`sh
+```
 npm run dev
-\`\`\`
+```
 
-Esto levantará un servidor local en \`http://localhost:5173/\` (por defecto).
+Esto levantará un servidor local en `http://localhost:5173/` (por defecto).
 
 ## Construcción para producción
 
 Versión optimizada para producción:
 
-\`\`\`sh
+```
 npm run build
-\`\`\`
+```
 
 ## Despliegue
 
-Puedes desplegar el contenido de la carpeta \`dist/\`:
+Se puede desplegar el contenido de la carpeta **dist**:
 
 ## Scripts disponibles
 
-- \`dev\` - Inicia el servidor de desarrollo.
-- \`build\` - Genera los archivos para producción.
-- \`preview\` - Previsualiza la versión de producción.
-- \`lint\` - Ejecuta el linter de código.
+- **dev** - Inicia el servidor de desarrollo.
+- **build** - Genera los archivos para producción.
+- **preview** - Previsualiza la versión de producción.
+- **lint** - Ejecuta el linter de código.
 
 ## Tecnologías utilizadas
 
