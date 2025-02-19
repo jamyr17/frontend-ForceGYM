@@ -43,6 +43,9 @@ function Form() {
             result = await updateUser(reqUser)
             action = 'editado'
         }
+
+        closeModalForm()
+        reset()
         
         if(result.ok){
             const result2 = await fetchUsers()
@@ -64,15 +67,10 @@ function Form() {
                 })
             }
 
-            closeModalForm()
-            reset()
-        }
-
-        if(result.logout){
+        }else if(result.logout){
             setAuthHeader(null)
             setAuthUser(null)
-            closeModalForm()
-            navigate('/login', {replace: true})
+            navigate('/login')
         }
 
     }

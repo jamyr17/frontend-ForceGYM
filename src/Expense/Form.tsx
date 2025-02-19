@@ -7,28 +7,38 @@ import useEconomicExpenseStore from "./Store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { formatDate } from "../shared/utils/format";
-import { setAuthHeader, setAuthUser } from "../shared/utils/authentication";
+import { getAuthUser, setAuthHeader, setAuthUser } from "../shared/utils/authentication";
 
 const MAXLENGTH_VOUCHER = 100
-const MAXLENGTH_DETAIL = 10
+const MAXLENGTH_DETAIL = 100
 const MAXDATE = new Date().toUTCString()
 
 function Form() {
     const navigate = useNavigate();
     const { meansOfPayment } = useCommonDataStore();
-    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<EconomicExpenseDataForm>();
+    const { register, handleSubmit, setValue, formState: { errors }, reset, watch } = useForm<EconomicExpenseDataForm>();
     const { economicExpenses, activeEditingId, fetchEconomicExpenses, addEconomicExpense, updateEconomicExpense, closeModalForm } = useEconomicExpenseStore();
+    const idMeanOfPayment = watch("idMeanOfPayment") ? Number(watch("idMeanOfPayment")) : null;
 
     const submitForm = async (data: EconomicExpenseDataForm) => {
         let action = '', result;
+        const loggedUser = getAuthUser()
+        const reqUser = {
+            ...data, 
+            idUser: loggedUser?.idUser, 
+            paramLoggedIdUser: loggedUser?.idUser
+        }
         
         if (activeEditingId === 0) {
-            result = await addEconomicExpense(data);
+            result = await addEconomicExpense(reqUser);
             action = 'agregado';
         } else {
-            result = await updateEconomicExpense(data);
+            result = await updateEconomicExpense(reqUser);
             action = 'editado';
         }
+
+        closeModalForm()
+        reset()
         
         if (result.ok) {
             const result2 = await fetchEconomicExpenses()
@@ -39,8 +49,8 @@ function Form() {
                 navigate('/login', {replace: true})
             }else{
                 await Swal.fire({
-                    title: `Ingreso económico ${action}`,
-                    text: `Se ha ${action} el ingreso`,
+                    title: `Gasto económico ${action}`,
+                    text: `Se ha ${action} el gasto`,
                     icon: 'success',
                     confirmButtonText: 'OK',
                     timer: 3000,
@@ -50,8 +60,10 @@ function Form() {
                 })
             }
 
-            closeModalForm()
-            reset()
+        }else if(result.logout){
+            setAuthHeader(null)
+            setAuthUser(null)
+            navigate('/login')
         }
     };
 
@@ -64,6 +76,7 @@ function Form() {
                 setValue('isDeleted', activeIncome.isDeleted)
                 setValue('registrationDate', activeIncome.registrationDate)
                 setValue('amount', activeIncome.amount)
+                setValue('detail', activeIncome.detail)
                 setValue('voucherNumber', activeIncome.voucherNumber)
                 setValue('idMeanOfPayment', activeIncome.meanOfPayment.idMeanOfPayment)
             }
@@ -132,7 +145,7 @@ function Form() {
                     type="text" 
                     placeholder="Ingrese el voucher" 
                     {...register('voucherNumber', {
-                        required: 'El voucher es obligatorio',
+                        required: idMeanOfPayment === 1 ? 'El voucher es obligatorio' : false,
                         maxLength: {
                             value: MAXLENGTH_VOUCHER,
                             message: `Debe ingresar un voucher de máximo ${MAXLENGTH_VOUCHER} carácteres`

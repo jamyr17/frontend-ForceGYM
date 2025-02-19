@@ -25,6 +25,9 @@ function Form() {
             result = await updateProductInventory(data);
             action = 'editado';
         }
+
+        closeModalForm()
+        reset()
         
         if (result.ok) {
             const result2 = await fetchProductsInventory()
@@ -32,11 +35,11 @@ function Form() {
             if(result2.logout){
                 setAuthHeader(null)
                 setAuthUser(null)
-                navigate('/login', {replace: true})
+                navigate('/login')
             }else{
                 await Swal.fire({
-                    title: `Ingreso económico ${action}`,
-                    text: `Se ha ${action} el ingreso`,
+                    title: `Producto de inventario ${action}`,
+                    text: `Se ha ${action} el producto`,
                     icon: 'success',
                     confirmButtonText: 'OK',
                     timer: 3000,
@@ -46,21 +49,24 @@ function Form() {
                 })
             }
 
-            closeModalForm()
-            reset()
+        }else if(result.logout){
+            setAuthHeader(null)
+            setAuthUser(null)
+            navigate('/login')
         }
     };
 
     useEffect(() => {
         if (activeEditingId) {
-            const activeproduct = productsInventory.find(product => product.idProductInventory === activeEditingId)
-            if (activeproduct) {
-                setValue('idProductInventory', activeproduct.idProductInventory)
-                setValue('idUser', activeproduct.user.idUser)
-                setValue('isDeleted', activeproduct.isDeleted)
-                setValue('code', activeproduct.code)
-                setValue('quantity', activeproduct.quantity)
-                setValue('cost', activeproduct.cost)
+            const activeProduct = productsInventory.find(product => product.idProductInventory === activeEditingId)
+            if (activeProduct) {
+                setValue('idProductInventory', activeProduct.idProductInventory)
+                setValue('idUser', activeProduct.user.idUser)
+                setValue('isDeleted', activeProduct.isDeleted)
+                setValue('name', activeProduct.name)
+                setValue('code', activeProduct.code)
+                setValue('quantity', activeProduct.quantity)
+                setValue('cost', activeProduct.cost)
             }
         }
     }, [activeEditingId]);
@@ -72,7 +78,7 @@ function Form() {
             onSubmit={handleSubmit(submitForm)}
         >
             <legend className="uppercase text-center text-yellow text-2xl font-black border-b-2 py-2 border-yellow">
-                {activeEditingId ? 'Actualizar ingreso' : 'Registrar ingreso'}
+                {activeEditingId ? 'Actualizar producto' : 'Registrar producto'}
             </legend>
 
             {/* inputs ocultos para la funcionalidad de actualizar */}

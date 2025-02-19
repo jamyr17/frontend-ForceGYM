@@ -53,20 +53,20 @@ function EconomicIncomeManagement() {
 
     useEffect(() => {}, [economicIncomes])
     
-        useEffect(() => {
-            const fetchData = async () => {
-                const { logout } = await fetchEconomicIncomes()
-    
-                if(logout){
-                    setAuthHeader(null)
-                    setAuthUser(null)
-                    navigate('/login', {replace: true})
-                }    
-    
-            }
-            
-            fetchData()
-        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax])
+    useEffect(() => {
+        const fetchData = async () => {
+            const { logout } = await fetchEconomicIncomes()
+
+            if(logout){
+                setAuthHeader(null)
+                setAuthUser(null)
+                navigate('/login')
+            }    
+
+        }
+        
+        fetchData()
+    }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax])
 
     return ( 
         <div className="bg-black h-full w-full">
@@ -99,14 +99,14 @@ function EconomicIncomeManagement() {
                             Content={Form}
                         />
 
-                        {economicIncomes.length>0 &&
+                        {economicIncomes?.length>0 &&
                         <button className="flex gap-2 items-center text-end mt-4 mr-2 px-2 py-1 hover:bg-gray-300 hover:rounded-full hover:cursor-pointer">
                             <MdOutlineFileDownload /> Descargar
                         </button>
                         }
                     </div>
                     
-                    {economicIncomes.length>0 ? (
+                    {economicIncomes?.length>0 ? (
                     <table className="w-full mt-8 border-t-2 border-slate-200 overflow-scroll">
                         <thead>
                             <tr>
@@ -144,7 +144,7 @@ function EconomicIncomeManagement() {
                         </thead>
                         <tbody>
                         
-                            {economicIncomes.map((economicIncome, index) => (
+                            {economicIncomes?.map((economicIncome, index) => (
                             <tr key={economicIncome.idEconomicIncome} className="text-center py-8">
                                 <td className="py-2">{index + 1}</td>
                                 <td className="py-2">{economicIncome.voucherNumber!='' ? economicIncome.voucherNumber : 'No adjunto'}</td>

@@ -6,7 +6,7 @@ export function FilterButton() {
     const { filterByStatus, filterByCostRangeMin, filterByCostRangeMax, filterByQuantityRangeMin, filterByQuantityRangeMax, showModalFilter } = useProductInventoryStore()
     const filteringStyles = (
         filterByStatus!='' || filterByCostRangeMin!=0 || filterByCostRangeMax!=0 || filterByQuantityRangeMin!=0 || filterByQuantityRangeMax!=0
-    ) && 'bg-white outline-none'
+    ) && ' bg-white outline-none'
 
     return (
         <button
@@ -33,8 +33,8 @@ export function FilterSelect() {
         changeFilterByQuantityRangeMax
     } = useProductInventoryStore()
     const filteredStatusSelectStyles = filterByStatus!='' && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
-    const filteredQuantityRangeStyles = (filterByCostRangeMin!=0 && filterByCostRangeMax!=0)  && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
-    const filteredCostRangeStyles = (filterByQuantityRangeMin !=null && filterByQuantityRangeMax!=null)  && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
+    const filteredCostRangeStyles = (filterByCostRangeMin!=0 && filterByCostRangeMax!=0)  && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
+    const filteredQuantityRangeStyles = (filterByQuantityRangeMin !=0 && filterByQuantityRangeMax!=0)  && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
 
     return (
         <div className='flex flex-col gap-4'>
@@ -81,6 +81,7 @@ export function FilterSelect() {
                         id="costMin"
                         type="number"
                         min={1}
+                        value={filterByCostRangeMin}
                         onChange={(e) => changeFilterByCostRangeMin(+e.target.value)}
                     />
                 </div>
@@ -94,10 +95,9 @@ export function FilterSelect() {
                         name="costMax"
                         id="costMax"
                         type="number"
+                        value={filterByCostRangeMax}
                         onChange={(e) => {
-                            if(Number((document.getElementById('costMin') as HTMLInputElement).value) < +e.target.value){
-                                changeFilterByCostRangeMax(+e.target.value)
-                            }
+                            changeFilterByCostRangeMax(+e.target.value)
                         }}
                     />
                 </div>
@@ -127,6 +127,7 @@ export function FilterSelect() {
                         id="quantityMin"
                         type="number"
                         min={1}
+                        value={filterByQuantityRangeMin}
                         onChange={(e) => changeFilterByQuantityRangeMin(+e.target.value)}
                     />
                 </div>
@@ -140,10 +141,9 @@ export function FilterSelect() {
                         name="quantityMax"
                         id="quantityMax"
                         type="number"
+                        value={filterByQuantityRangeMax}
                         onChange={(e) => {
-                            if(Number((document.getElementById('quantityMin') as HTMLInputElement).value) < +e.target.value){
-                                changeFilterByQuantityRangeMax(+e.target.value)
-                            }
+                            changeFilterByQuantityRangeMax(+e.target.value)
                         }}
                     />
                 </div>

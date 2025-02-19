@@ -96,14 +96,14 @@ function UserManagement() {
                             Content={Form}
                         />
 
-                        {users.length>0 &&
+                        {users?.length>0 &&
                         <button className="flex gap-2 items-center text-end mt-4 mr-2 px-2 py-1 hover:bg-gray-300 hover:rounded-full hover:cursor-pointer">
                             <MdOutlineFileDownload /> Descargar
                         </button>
                         }
                     </div>
                     
-                    {users.length>0 ? (
+                    {users?.length>0 ? (
                     <table className="w-full mt-8 border-t-2 border-slate-200 overflow-scroll">
                         <thead>
                             <tr>
@@ -141,7 +141,7 @@ function UserManagement() {
                         </thead>
                         <tbody>
                         
-                            {users.map((user, index) => (
+                            {users?.map((user, index) => (
                             <tr key={user.idUser} className="text-center py-8">
                                 <td className="py-2">{index + 1}</td>
                                 <td className="py-2">{user.person.identificationNumber}</td>

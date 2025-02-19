@@ -36,6 +36,9 @@ function Form() {
             result = await updateEconomicIncome(reqUser);
             action = 'editado';
         }
+
+        closeModalForm()
+        reset()
         
         if (result.ok) {
             const result2 = await fetchEconomicIncomes()
@@ -57,8 +60,10 @@ function Form() {
                 })
             }
 
-            closeModalForm()
-            reset()
+        }else if(result.logout){
+            setAuthHeader(null)
+            setAuthUser(null)
+            navigate('/login')
         }
     };
 
