@@ -81,6 +81,7 @@ export function FilterSelect() {
                         id="amountMin"
                         type="number"
                         min={1}
+                        value={filterByAmountRangeMin}
                         onChange={(e) => changeFilterByAmountRangeMin(+e.target.value)}
                     />
                 </div>
@@ -94,6 +95,7 @@ export function FilterSelect() {
                         name="amountMax"
                         id="amountMax"
                         type="number"
+                        value={filterByAmountRangeMax}
                         onChange={(e) => {
                             if(Number((document.getElementById('amountMin') as HTMLInputElement).value) < +e.target.value){
                                 changeFilterByAmountRangeMax(+e.target.value)
@@ -126,7 +128,9 @@ export function FilterSelect() {
                         name="dateMin"
                         id="dateMin"
                         type="date"
-                        min={1}
+                        min={'2010-01-01'}
+                        max={new Date().toISOString().split('T')[0]}
+                        value={filterByDateRangeMin ? filterByDateRangeMin.toISOString().split('T')[0] : ''}
                         onChange={(e) => changeFilterByDateRangeMin(new Date(e.target.value))}
                     />
                 </div>
@@ -140,6 +144,9 @@ export function FilterSelect() {
                         name="dateMax"
                         id="dateMax"
                         type="date"
+                        min={'2010-01-01'}
+                        max={new Date().toISOString().split('T')[0]}
+                        value={filterByDateRangeMax ? filterByDateRangeMax.toISOString().split('T')[0] : ''}
                         onChange={(e) => {
                             changeFilterByDateRangeMax(new Date(e.target.value))
                         }}

@@ -2,31 +2,38 @@ import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import { EconomicIncomeDataForm } from "../shared/types";
 import ErrorForm from "../shared/components/ErrorForm";
-import { useCommonDataStore } from "../shared/CommonDataStore";
 import useEconomicIncomeStore from "./Store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { formatDate } from "../shared/utils/format";
-import { setAuthHeader, setAuthUser } from "../shared/utils/authentication";
+import { getAuthUser, setAuthHeader, setAuthUser } from "../shared/utils/authentication";
+import { useCommonDataStore } from "../shared/CommonDataStore";
 
 const MAXLENGTH_VOUCHER = 100
-const MAXLENGTH_DETAIL = 10
+const MAXLENGTH_DETAIL = 100
 const MAXDATE = new Date().toUTCString()
 
 function Form() {
     const navigate = useNavigate();
     const { meansOfPayment, activityTypes } = useCommonDataStore();
-    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<EconomicIncomeDataForm>();
+    const { register, handleSubmit, setValue, formState: { errors }, reset, watch } = useForm<EconomicIncomeDataForm>();
     const { economicIncomes, activeEditingId, fetchEconomicIncomes, addEconomicIncome, updateEconomicIncome, closeModalForm } = useEconomicIncomeStore();
+    const idMeanOfPayment = watch("idMeanOfPayment") ? Number(watch("idMeanOfPayment")) : null;
 
     const submitForm = async (data: EconomicIncomeDataForm) => {
         let action = '', result;
+        const loggedUser = getAuthUser()
+        const reqUser = {
+            ...data, 
+            idUser: loggedUser?.idUser, 
+            paramLoggedIdUser: loggedUser?.idUser
+        }
         
         if (activeEditingId === 0) {
-            result = await addEconomicIncome(data);
+            result = await addEconomicIncome(reqUser);
             action = 'agregado';
         } else {
-            result = await updateEconomicIncome(data);
+            result = await updateEconomicIncome(reqUser);
             action = 'editado';
         }
         
@@ -64,6 +71,7 @@ function Form() {
                 setValue('isDeleted', activeIncome.isDeleted)
                 setValue('registrationDate', activeIncome.registrationDate)
                 setValue('amount', activeIncome.amount)
+                setValue('detail', activeIncome.detail)
                 setValue('voucherNumber', activeIncome.voucherNumber)
                 setValue('idMeanOfPayment', activeIncome.meanOfPayment.idMeanOfPayment)
                 setValue('idActivityType', activeIncome.activityType.idActivityType)
@@ -133,7 +141,7 @@ function Form() {
                     type="text" 
                     placeholder="Ingrese el voucher" 
                     {...register('voucherNumber', {
-                        required: 'El voucher es obligatorio',
+                        required: idMeanOfPayment === 1 ? 'El voucher es obligatorio' : false,
                         maxLength: {
                             value: MAXLENGTH_VOUCHER,
                             message: `Debe ingresar un voucher de máximo ${MAXLENGTH_VOUCHER} carácteres`

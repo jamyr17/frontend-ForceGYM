@@ -41,7 +41,7 @@ function Modal({ Button, modal, getDataById, closeModal, Content } : ModalProps)
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <DialogPanel className="flex flex-col w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl ">
-                                    <button className='flex justify-end text-4xl pr-4' onClick={() => { closeModal() }}>
+                                    <button className='flex justify-end text-4xl pr-4' onClick={() => { getDataById(0); closeModal() }}>
                                         <MdOutlineCancel className='hover:cursor-pointer hover:text-yellow'/>
                                     </button>
                                     <Content/>

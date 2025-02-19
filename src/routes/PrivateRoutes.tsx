@@ -1,11 +1,11 @@
 import { Routes, Route, useNavigate } from "react-router";
-import { useCommonDataStore } from "../shared/CommonDataStore";
 import { useEffect } from "react";
 import { setAuthHeader, setAuthUser } from "../shared/utils/authentication";
 import UserManagement from "../User/Page";
 import EconomicIncomeManagement from "../Income/Page";
 import EconomicExpenseManagement from "../Expense/Page";
 import ProductInventoryManagement from "../Product/Page";
+import { useCommonDataStore } from "../shared/CommonDataStore";
 
 function PrivateRoutes () {
     // fetchear los datos comunes: roles, tipos de pago, etc. para solo hacerlo 1 vez

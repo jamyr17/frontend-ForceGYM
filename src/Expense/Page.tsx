@@ -147,7 +147,7 @@ function EconomicExpenseManagement() {
                             <tr key={economicExpense.idEconomicExpense} className="text-center py-8">
                                 <td className="py-2">{index + 1}</td>
                                 <td className="py-2">{economicExpense.voucherNumber}</td>
-                                <td className="py-2">{formatDate(economicExpense.registrationDate)}</td>
+                                <td className="py-2">{formatDate(new Date(economicExpense.registrationDate))}</td>
                                 <td className="py-2">{economicExpense.amount}</td>
                                 {filterByStatus && (
                                 <td>

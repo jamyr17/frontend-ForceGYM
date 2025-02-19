@@ -8,7 +8,7 @@ import Pagination from "../shared/components/Pagination";
 import { useEconomicIncomeStore } from './Store'
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import Form from "./Form";
-import { formatDate } from "../shared/utils/format";
+import { formatAmountToCRC, formatDate } from "../shared/utils/format";
 import { IoIosMore } from "react-icons/io";
 import { useEconomicIncome } from "./useIncome";
 import { mapEconomicIncomeToDataForm } from "../shared/types/mapper";
@@ -66,7 +66,7 @@ function EconomicIncomeManagement() {
             }
             
             fetchData()
-        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus   ])
+        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax])
 
     return ( 
         <div className="bg-black h-full w-full">
@@ -136,6 +136,7 @@ function EconomicIncomeManagement() {
                                     {(orderBy==='amount' && directionOrderBy==='ASC') && <FaArrowDown className="text-yellow"/> } 
                                 </button></th>
 
+                                <th>MÉTODO DE PAGO</th>
                                 {filterByStatus && <th>ESTADO</th>}
 
                                 <th>ACCIONES</th>
@@ -146,9 +147,10 @@ function EconomicIncomeManagement() {
                             {economicIncomes.map((economicIncome, index) => (
                             <tr key={economicIncome.idEconomicIncome} className="text-center py-8">
                                 <td className="py-2">{index + 1}</td>
-                                <td className="py-2">{economicIncome.voucherNumber}</td>
-                                <td className="py-2">{formatDate(economicIncome.registrationDate)}</td>
-                                <td className="py-2">{economicIncome.amount}</td>
+                                <td className="py-2">{economicIncome.voucherNumber!='' ? economicIncome.voucherNumber : 'No adjunto'}</td>
+                                <td className="py-2">{formatDate(new Date(economicIncome.registrationDate))}</td>
+                                <td className="py-2">{formatAmountToCRC(economicIncome.amount)}</td>
+                                <td className="py-2">{economicIncome.meanOfPayment.name}</td>
                                 {filterByStatus && (
                                 <td>
                                     {economicIncome.isDeleted ? (

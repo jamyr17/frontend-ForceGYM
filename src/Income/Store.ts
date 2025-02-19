@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { EconomicIncome, EconomicIncomeDataForm } from "../shared/types";
 import { deleteData, getData, postData, putData } from "../shared/services/gym";
+import { formatDateForParam } from "../shared/utils/format";
 
 type EconomicIncomeStore = {
     economicIncomes: EconomicIncome[];
@@ -86,7 +87,7 @@ export const useEconomicIncomeStore = create<EconomicIncomeStore>()(
                 filters += `&filterByAmountRangeMax=${state.filterByAmountRangeMax}&filterByAmountRangeMin=${state.filterByAmountRangeMin}`;
             }
             if (state.filterByDateRangeMax !== null && state.filterByDateRangeMin !== null) {
-                filters += `&filterByDateRangeMax=${state.filterByDateRangeMax}&filterByDateRangeMin=${state.filterByDateRangeMin}`;
+                filters += `&filterByDateRangeMax=${formatDateForParam(state.filterByDateRangeMax)}&filterByDateRangeMin=${formatDateForParam(state.filterByDateRangeMin)}`;
             }
 
             const result = await getData(

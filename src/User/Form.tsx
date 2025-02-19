@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import { UserDataForm } from "../shared/types";
 import ErrorForm from "../shared/components/ErrorForm";
-import { useCommonDataStore } from "../shared/CommonDataStore";
 import { getAuthUser, setAuthHeader, setAuthUser } from "../shared/utils/authentication";
 import useUserStore from "./Store";
 import { useEffect, useRef } from "react";
 import { formatDate } from "../shared/utils/format";
 import { useNavigate } from "react-router";
+import { useCommonDataStore } from "../shared/CommonDataStore";
 
 // variables usadas en este componente para validaciones del formulario
 const MAXLENGTH_IDENTIFICATIONUMBER = 20
