@@ -50,7 +50,7 @@ type ProductInventoryStore = {
 
 export const useProductInventoryStore = create<ProductInventoryStore>()(
     devtools((set) => ({
-        productInventorys: [],
+        productsInventory: [],
         modalForm: false,
         modalFilter: false,
         modalInfo: false,
@@ -68,7 +68,7 @@ export const useProductInventoryStore = create<ProductInventoryStore>()(
         filterByQuantityRangeMax: 0,
         filterByQuantityRangeMin: 0,
 
-        fetchProducstInventory: async () => {
+        fetchProductsInventory: async () => {
             const state = useProductInventoryStore.getState();
             let newPage = state.page;
             let filters = `&searchType=${state.searchType}`;
@@ -97,7 +97,10 @@ export const useProductInventoryStore = create<ProductInventoryStore>()(
                 newPage = 1;
             }
 
-            set({ productsInventory: [...result.data.productInventorys], totalRecords: result.data.totalRecords, page: newPage });
+            const products = result.data?.products ?? []
+            const totalRecords = result.data?.totalRecords ?? 0
+
+            set({ productsInventory: [...products], totalRecords: totalRecords, page: newPage });
             return result;
         },
 

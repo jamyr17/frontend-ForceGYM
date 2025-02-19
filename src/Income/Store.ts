@@ -98,7 +98,10 @@ export const useEconomicIncomeStore = create<EconomicIncomeStore>()(
                 newPage = 1;
             }
 
-            set({ economicIncomes: [...result.data.economicIncomes], totalRecords: result.data.totalRecords, page: newPage });
+            const incomes = result.data?.economicIncomes ?? []
+            const totalRecords = result.data?.totalRecords ?? 0
+
+            set({ economicIncomes: [...incomes], totalRecords: totalRecords, page: newPage });
             return result;
         },
 

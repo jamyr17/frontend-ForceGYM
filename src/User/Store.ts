@@ -90,7 +90,10 @@ const useUserStore = create<UserStore>()(
                 newPage = 1
             }
 
-            set({ users: [...result.data.users], totalRecords: result.data.totalRecords, page: newPage })
+            const users = result.data?.users ?? []
+            const totalRecords = result.data?.totalRecords ?? 0
+
+            set({ users: [...users], totalRecords: totalRecords, page: newPage })
             return result
         },        
 

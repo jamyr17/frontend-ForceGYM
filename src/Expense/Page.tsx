@@ -7,7 +7,7 @@ import NoData from "../shared/components/NoData";
 import Pagination from "../shared/components/Pagination";
 import { useEconomicExpenseStore } from './Store'
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
-import { formatDate } from "../shared/utils/format";
+import { formatAmountToCRC, formatDate } from "../shared/utils/format";
 import { IoIosMore } from "react-icons/io";
 import { mapEconomicExpenseToDataForm } from "../shared/types/mapper";
 import { FilterButton, FilterSelect } from "./Filter";
@@ -66,7 +66,7 @@ function EconomicExpenseManagement() {
             }
             
             fetchData()
-        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus   ])
+        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax ])
 
     return ( 
         <div className="bg-black h-full w-full">
@@ -99,14 +99,14 @@ function EconomicExpenseManagement() {
                             Content={Form}
                         />
 
-                        {economicExpenses.length>0 &&
+                        {economicExpenses?.length>0 &&
                         <button className="flex gap-2 items-center text-end mt-4 mr-2 px-2 py-1 hover:bg-gray-300 hover:rounded-full hover:cursor-pointer">
                             <MdOutlineFileDownload /> Descargar
                         </button>
                         }
                     </div>
                     
-                    {economicExpenses.length>0 ? (
+                    {economicExpenses?.length>0 ? (
                     <table className="w-full mt-8 border-t-2 border-slate-200 overflow-scroll">
                         <thead>
                             <tr>
@@ -136,6 +136,7 @@ function EconomicExpenseManagement() {
                                     {(orderBy==='amount' && directionOrderBy==='ASC') && <FaArrowDown className="text-yellow"/> } 
                                 </button></th>
 
+                                <th>MÉTODO DE PAGO</th>
                                 {filterByStatus && <th>ESTADO</th>}
 
                                 <th>ACCIONES</th>
@@ -143,12 +144,13 @@ function EconomicExpenseManagement() {
                         </thead>
                         <tbody>
                         
-                            {economicExpenses.map((economicExpense, index) => (
+                            {economicExpenses?.map((economicExpense, index) => (
                             <tr key={economicExpense.idEconomicExpense} className="text-center py-8">
                                 <td className="py-2">{index + 1}</td>
-                                <td className="py-2">{economicExpense.voucherNumber}</td>
+                                <td className="py-2">{economicExpense.voucherNumber!='' ? economicExpense.voucherNumber : 'No adjunto'}</td>
                                 <td className="py-2">{formatDate(new Date(economicExpense.registrationDate))}</td>
-                                <td className="py-2">{economicExpense.amount}</td>
+                                <td className="py-2">{formatAmountToCRC(economicExpense.amount)}</td>
+                                <td className="py-2">{economicExpense.meanOfPayment.name}</td>
                                 {filterByStatus && (
                                 <td>
                                     {economicExpense.isDeleted ? (

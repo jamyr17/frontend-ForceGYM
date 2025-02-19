@@ -6,7 +6,7 @@ export function FilterButton() {
     const { filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax, showModalFilter } = useEconomicIncomeStore()
     const filteringStyles = (
         filterByStatus!='' || filterByAmountRangeMin!=0 || filterByAmountRangeMax!=0 || filterByDateRangeMin!=null || filterByDateRangeMax!=null
-    ) && 'bg-white outline-none'
+    ) && ' bg-white outline-none'
 
     return (
         <button
@@ -97,9 +97,7 @@ export function FilterSelect() {
                         type="number"
                         value={filterByAmountRangeMax}
                         onChange={(e) => {
-                            if(Number((document.getElementById('amountMin') as HTMLInputElement).value) < +e.target.value){
-                                changeFilterByAmountRangeMax(+e.target.value)
-                            }
+                            changeFilterByAmountRangeMax(+e.target.value)
                         }}
                     />
                 </div>

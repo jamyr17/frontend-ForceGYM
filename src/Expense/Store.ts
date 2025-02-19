@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { EconomicExpense, EconomicExpenseDataForm } from "../shared/types";
 import { deleteData, getData, postData, putData } from "../shared/services/gym";
+import { formatDateForParam } from "../shared/utils/format";
 
 type EconomicExpenseStore = {
     economicExpenses: EconomicExpense[];
@@ -86,7 +87,7 @@ export const useEconomicExpenseStore = create<EconomicExpenseStore>()(
                 filters += `&filterByAmountRangeMax=${state.filterByAmountRangeMax}&filterByAmountRangeMin=${state.filterByAmountRangeMin}`;
             }
             if (state.filterByDateRangeMax !== null && state.filterByDateRangeMin !== null) {
-                filters += `&filterByDateRangeMax=${state.filterByDateRangeMax}&filterByDateRangeMin=${state.filterByDateRangeMin}`;
+                filters += `&filterByDateRangeMax=${formatDateForParam(state.filterByDateRangeMax)}&filterByDateRangeMin=${formatDateForParam(state.filterByDateRangeMin)}`;
             }
 
             const result = await getData(
@@ -97,7 +98,10 @@ export const useEconomicExpenseStore = create<EconomicExpenseStore>()(
                 newPage = 1;
             }
 
-            set({ economicExpenses: [...result.data.economicExpenses], totalRecords: result.data.totalRecords, page: newPage });
+            const expenses = result.data?.economicExpenses ?? []
+            const totalRecords = result.data?.totalRecords ?? 0
+
+            set({ economicExpenses: [...expenses], totalRecords: totalRecords, page: newPage });
             return result;
         },
 

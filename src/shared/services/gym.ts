@@ -128,22 +128,7 @@ const manageResponse = async (res: Response) => {
     }
 
     // errores de servidor
-    if ([500, 501, 503, 504, 505, 506, 507, 508].includes(code)) {
-        await Swal.fire({
-            title: 'Ha ocurrido un error',
-            text: 'Inténtelo de nuevo',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            timer: 3000,
-            timerProgressBar: true,
-            width: 300,
-            confirmButtonColor: '#CFAD04'
-        })
-        return
-    }
-
-    // error de bad gateway (mysql)
-    if (code === 502) {
+    if ([500, 502, 501, 503, 504, 505, 506, 507, 508].includes(code)) {
         await Swal.fire({
             title: 'Ha ocurrido un error',
             text: result.message || 'Error en el servidor',

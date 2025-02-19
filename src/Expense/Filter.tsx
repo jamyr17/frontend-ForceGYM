@@ -6,7 +6,7 @@ export function FilterButton() {
     const { filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax, showModalFilter } = useEconomicExpenseStore()
     const filteringStyles = (
         filterByStatus!='' || filterByAmountRangeMin!=0 || filterByAmountRangeMax!=0 || filterByDateRangeMin!=null || filterByDateRangeMax!=null
-    ) && 'bg-white outline-none'
+    ) && ' bg-white outline-none'
 
     return (
         <button
@@ -81,6 +81,7 @@ export function FilterSelect() {
                         id="amountMin"
                         type="number"
                         min={1}
+                        value={filterByAmountRangeMin}
                         onChange={(e) => changeFilterByAmountRangeMin(+e.target.value)}
                     />
                 </div>
@@ -94,10 +95,9 @@ export function FilterSelect() {
                         name="amountMax"
                         id="amountMax"
                         type="number"
+                        value={filterByAmountRangeMax}
                         onChange={(e) => {
-                            if(Number((document.getElementById('amountMin') as HTMLInputElement).value) < +e.target.value){
-                                changeFilterByAmountRangeMax(+e.target.value)
-                            }
+                            changeFilterByAmountRangeMax(+e.target.value)
                         }}
                     />
                 </div>
@@ -127,6 +127,7 @@ export function FilterSelect() {
                         id="dateMin"
                         type="date"
                         min={1}
+                        value={filterByDateRangeMin ? filterByDateRangeMin.toISOString().split('T')[0] : ''}
                         onChange={(e) => changeFilterByDateRangeMin(new Date(e.target.value))}
                     />
                 </div>
@@ -140,6 +141,7 @@ export function FilterSelect() {
                         name="dateMax"
                         id="dateMax"
                         type="date"
+                        value={filterByDateRangeMax ? filterByDateRangeMax.toISOString().split('T')[0] : ''}
                         onChange={(e) => {
                             changeFilterByDateRangeMax(new Date(e.target.value))
                         }}

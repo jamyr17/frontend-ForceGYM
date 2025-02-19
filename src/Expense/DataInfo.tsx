@@ -1,4 +1,4 @@
-import { formatDate } from "../shared/utils/format";
+import { formatAmountToCRC, formatDate } from "../shared/utils/format";
 import useEconomicExpenseStore from "./Store";
 
 function DataInfo() {
@@ -15,7 +15,7 @@ function DataInfo() {
 
                 <div className="flex flex-col gap-2 text-lg">
                     <p><strong>NUMERO DE VOUCHER</strong></p>
-                    <p>{economicExpense.voucherNumber}</p>
+                    <p>{economicExpense.voucherNumber!='' ? economicExpense.voucherNumber : 'No adjunto'}</p>
                 </div>
 
                 <div className="flex flex-col gap-2 text-lg">
@@ -43,7 +43,7 @@ function DataInfo() {
 
                 <div className="flex flex-col gap-2 text-lg">
                     <p><strong>MONTO</strong></p>
-                    <p>{economicExpense.amount}</p>
+                    <p>{formatAmountToCRC(economicExpense.amount)}</p>
                 </div>
             </div>
         </div>
