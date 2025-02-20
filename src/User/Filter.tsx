@@ -23,48 +23,12 @@ export const FilterSelect = () => {
     const filteredRoleSelectStyles = filterByRole!='' && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
 
     return (
-        <div className='flex flex-col gap-4'>
-            <div className='flex'>
-                <label>
-                    Tipo
-                </label>
+        <div className="flex flex-col gap-4">
+            {/* Filtro por Estado */}
+            <div className="flex items-center gap-4">
+                <label className="w-20">Estado</label>
                 <select 
-                    className={'ml-8 text-center' + filteredRoleSelectStyles}
-                    value={filterByRole} 
-                    onChange={(e) => {
-                        
-                        if(Number(e.target.value) === 0){
-                            changeFilterByRole('')
-                        }else{
-                            changeFilterByRole(e.target.value)
-                        }
-
-                    }}
-                >
-                    <option value={0}>Todos</option>
-                    <option value={'Administrador'}>Administrador</option>
-                    <option value={'Colaborador'}>Colaborador</option>
-                </select>
-
-                { filterByRole && 
-                    <button
-                        className='flex justify-end text-2xl ml-2 px-4 text-yellow'
-                        onClick={() => { changeFilterByRole('') }}
-                    >
-                        <MdOutlineCancel 
-                            className='hover:cursor-pointer'
-                        />
-                    </button>
-                }
-
-            </div>
-
-            <div className='flex'>
-                <label>
-                    Estado
-                </label>
-                <select 
-                    className={'ml-8 text-center' + filteredStatusSelectStyles}
+                    className={'border rounded-md p-2 w-52 text-center' + filteredStatusSelectStyles}
                     value={filterByStatus} 
                     onChange={(e) => {
                         if(Number(e.target.value) === 0){
@@ -78,19 +42,46 @@ export const FilterSelect = () => {
                     <option value={'Inactivos'}> Inactivos </option>
                     <option value={'Todos'}> Todos </option>
                 </select>
-
+    
                 { filterByStatus && 
                     <button
-                        className='flex justify-end text-2xl ml-2 px-4 text-yellow'
-                        onClick={() => { changeFilterByStatus('') }}
+                        className="text-2xl text-yellow"
+                        onClick={() => changeFilterByStatus('')}
                     >
-                        <MdOutlineCancel 
-                            className='hover:cursor-pointer'
-                        />
+                        <MdOutlineCancel className="hover:cursor-pointer" />
                     </button>
                 }
             </div>
             
+            {/* Filtro por Tipo */}
+            <div className="flex items-center gap-4">
+                <label className="w-20">Tipo</label>
+                <select 
+                    className={'border rounded-md p-2 w-52 text-center' + filteredRoleSelectStyles}
+                    value={filterByRole} 
+                    onChange={(e) => {
+                        if(Number(e.target.value) === 0){
+                            changeFilterByRole('')
+                        }else{
+                            changeFilterByRole(e.target.value)
+                        }
+                    }}
+                >
+                    <option value={0}>Todos</option>
+                    <option value={'Administrador'}>Administrador</option>
+                    <option value={'Colaborador'}>Colaborador</option>
+                </select>
+    
+                { filterByRole && 
+                    <button
+                        className="text-2xl text-yellow"
+                        onClick={() => changeFilterByRole('')}
+                    >
+                        <MdOutlineCancel className="hover:cursor-pointer" />
+                    </button>
+                }
+            </div>
         </div>
     );
+    
 }

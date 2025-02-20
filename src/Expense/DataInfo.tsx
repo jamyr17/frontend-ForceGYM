@@ -11,7 +11,7 @@ function DataInfo() {
     return (
         <div className="grid grid-cols-3 gap-6">
             <div className="flex flex-col gap-2">
-                <h1 className="text-yellow font-black text-2xl uppercase mb-8 underline">Ingreso Económico</h1>
+                <h1 className="text-yellow font-black text-2xl uppercase mb-8 underline">Gasto</h1>
 
                 <div className="flex flex-col gap-2 text-lg">
                     <p><strong>NUMERO DE VOUCHER</strong></p>

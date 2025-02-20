@@ -16,6 +16,7 @@ import useProductInventoryStore from "./Store";
 import Form from "./Form";
 import { useProductInventory } from "./useProduct";
 import { FilterButton, FilterSelect } from "./Filter";
+import { formatAmountToCRC } from "../shared/utils/format";
 
 function ProductInventoryManagement() {
     const {
@@ -156,7 +157,7 @@ function ProductInventoryManagement() {
                                 <td className="py-2">{product.code}</td>
                                 <td className="py-2">{product.name}</td>
                                 <td className="py-2">{product.quantity}</td>
-                                <td className="py-2">{product.cost}</td>
+                                <td className="py-2">{formatAmountToCRC(product.cost)}</td>
                                 {filterByStatus && (
                                 <td>
                                     {product.isDeleted ? (
