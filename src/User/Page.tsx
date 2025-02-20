@@ -13,7 +13,7 @@ import Modal from "../shared/components/Modal"
 import Form from "./Form"
 import DataInfo from "./DataInfo";
 import { mapUserToDataForm } from "../shared/types/mapper";
-import { setAuthHeader, setAuthUser } from "../shared/utils/authentication";
+import { getAuthUser, setAuthHeader, setAuthUser } from "../shared/utils/authentication";
 import { useNavigate } from "react-router";
 import NoData from "../shared/components/NoData";
 
@@ -46,6 +46,7 @@ function UserManagement() {
 
     const { handleDelete, handleSearch, handleOrderByChange, handleRestore } = useUser()
     const navigate = useNavigate()
+    const authUser = getAuthUser()
 
     useEffect(() => {}, [users])
 
@@ -188,9 +189,14 @@ function UserManagement() {
                                     <button onClick={() => handleRestore(mapUserToDataForm(user))} className="p-2 bg-black rounded-sm hover:bg-slate-300 hover:cursor-pointer">
                                     <MdOutlineSettingsBackupRestore className="text-white" />
                                     </button>
-                                ) : (
-                                    <button onClick={() => handleDelete(user)} className="p-2 bg-black rounded-sm hover:bg-slate-300 hover:cursor-pointer">
-                                    <MdOutlineDelete className="text-white" />
+                                ) : ( 
+                                    <button 
+                                        onClick={() => handleDelete(user)} 
+                                        disabled={user.idUser === authUser?.idUser}
+                                        className={`p-2 rounded-sm hover:cursor-pointer bg-black
+                                        ${user.idUser === authUser?.idUser ? ' opacity-50 cursor-not-allowed' : 'hover:bg-slate-300'}`}
+                                    >
+                                    <MdOutlineDelete className={`text-white  ${user.idUser === authUser?.idUser && ' cursor-not-allowed'}`} />
                                     </button>
                                 )}
                                 </td>

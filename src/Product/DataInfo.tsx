@@ -1,3 +1,4 @@
+import { formatAmountToCRC } from "../shared/utils/format";
 import useProductInventoryStore from "./Store";
 
 function DataInfo() {
@@ -38,7 +39,7 @@ function DataInfo() {
 
                 <div className="flex flex-col gap-2 text-lg">
                     <p><strong>PRECIO UNITARIO</strong></p>
-                    <p>{productInventory.cost}</p>
+                    <p>{formatAmountToCRC(productInventory.cost)}</p>
                 </div>
             </div>
         </div>

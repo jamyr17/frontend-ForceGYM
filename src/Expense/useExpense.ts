@@ -11,8 +11,8 @@ export const useEconomicExpense = () => {
 
     const handleDelete = async ({ idEconomicExpense, voucherNumber } : EconomicExpense) => {
         await Swal.fire({
-            title: '¿Desea eliminar este ingreso económico?',
-            text: `Está eliminando el ingreso con comprobante N° ${voucherNumber}`,
+            title: '¿Desea eliminar este gasto económico?',
+            text: `Está eliminando el gasto con comprobante N° ${voucherNumber}`,
             icon: 'question',
             showCancelButton: true,
             cancelButtonText: "Cancelar",
@@ -28,8 +28,8 @@ export const useEconomicExpense = () => {
 
                 if(response.ok){
                     Swal.fire({
-                        title: 'Ingreso eliminado',
-                        text: `Se ha eliminado el ingreso con comprobante N° ${voucherNumber}`,
+                        title: 'Gasto eliminado',
+                        text: `Se ha eliminado el gasto con comprobante N° ${voucherNumber}`,
                         icon: 'success',
                         confirmButtonText: 'OK',
                         timer: 3000,
@@ -71,8 +71,8 @@ export const useEconomicExpense = () => {
         }
         
         await Swal.fire({
-            title: '¿Desea restaurar este ingreso económico?',
-            text: `Está restaurando el ingreso con comprobante N° ${economicExpense.voucherNumber}`,
+            title: '¿Desea restaurar este gasto económico?',
+            text: `Está restaurando el gasto con comprobante N° ${economicExpense.voucherNumber}`,
             icon: 'question',
             showCancelButton: true,
             cancelButtonText: "Cancelar",
@@ -87,8 +87,8 @@ export const useEconomicExpense = () => {
 
                 if(response.ok){
                     Swal.fire({
-                        title: 'Ingreso restaurado',
-                        text: `Se ha restaurado el ingreso con comprobante N° ${economicExpense.voucherNumber}`,
+                        title: 'Gasto restaurado',
+                        text: `Se ha restaurado el gasto con comprobante N° ${economicExpense.voucherNumber}`,
                         icon: 'success',
                         confirmButtonText: 'OK',
                         timer: 3000,

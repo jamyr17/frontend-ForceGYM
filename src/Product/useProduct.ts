@@ -11,8 +11,8 @@ export const useProductInventory = () => {
 
     const handleDelete = async ({ idProductInventory, name } : ProductInventory) => {
         await Swal.fire({
-            title: '¿Desea eliminar este ingreso económico?',
-            text: `Está eliminando el ingreso con comprobante N° ${name}`,
+            title: '¿Desea eliminar este producto?',
+            text: `Está eliminando el producto ${name}`,
             icon: 'question',
             showCancelButton: true,
             cancelButtonText: "Cancelar",
@@ -28,8 +28,8 @@ export const useProductInventory = () => {
 
                 if(response.ok){
                     Swal.fire({
-                        title: 'Ingreso eliminado',
-                        text: `Se ha eliminado el ingreso con comprobante N° ${name}`,
+                        title: 'Producto eliminado',
+                        text: `Se ha eliminado el producto ${name}`,
                         icon: 'success',
                         confirmButtonText: 'OK',
                         timer: 3000,
@@ -71,8 +71,8 @@ export const useProductInventory = () => {
         }
         
         await Swal.fire({
-            title: '¿Desea restaurar este ingreso económico?',
-            text: `Está restaurando el ingreso con comprobante N° ${productInventory.name}`,
+            title: '¿Desea restaurar este producto?',
+            text: `Está restaurando el producto ${productInventory.name}`,
             icon: 'question',
             showCancelButton: true,
             cancelButtonText: "Cancelar",
@@ -87,8 +87,8 @@ export const useProductInventory = () => {
 
                 if(response.ok){
                     Swal.fire({
-                        title: 'Ingreso restaurado',
-                        text: `Se ha restaurado el ingreso con comprobante N° ${productInventory.name}`,
+                        title: 'Producto restaurado',
+                        text: `Se ha restaurado el producto ${productInventory.name}`,
                         icon: 'success',
                         confirmButtonText: 'OK',
                         timer: 3000,

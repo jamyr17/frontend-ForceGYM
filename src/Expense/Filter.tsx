@@ -32,17 +32,17 @@ export function FilterSelect() {
         changeFilterByDateRangeMin, 
         changeFilterByDateRangeMax  
     } = useEconomicExpenseStore()
-    const filteredStatusSelectStyles = filterByStatus!='' && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
-    const filteredAmountRangeStyles = (filterByAmountRangeMin!=0 && filterByAmountRangeMax!=0)  && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
-    const filteredDateRangeStyles = (filterByDateRangeMin !=null && filterByDateRangeMax!=null)  && ' px-0.5 rounded-full border-2 border-yellow text-yellow'
+    const filteredStatusSelectStyles = filterByStatus!='' && ' px-0.5 border-yellow text-yellow'
+    const filteredAmountRangeStyles = (filterByAmountRangeMin!=0 && filterByAmountRangeMax!=0)  && ' px-0.5 border-yellow text-yellow'
+    const filteredDateRangeStyles = (filterByDateRangeMin !=null && filterByDateRangeMax!=null)  && ' px-0.5 border-yellow text-yellow'
 
     return (
-        <div className='flex flex-col gap-4'>
-
-            <div className='flex'>
-                <label htmlFor="status">Estado</label>
+        <div className="flex flex-col gap-4">
+            {/* Filtro por Estado */}
+            <div className="flex items-center gap-4">
+                <label htmlFor="status" className="w-20">Estado</label>
                 <select 
-                    className={'ml-8 text-center' + filteredStatusSelectStyles}
+                    className={'border rounded-md p-2 w-78 text-center' + filteredStatusSelectStyles}
                     name="status"
                     id="status"
                     value={filterByStatus} 
@@ -58,111 +58,102 @@ export function FilterSelect() {
                     <option value={'Inactivos'}> Inactivos </option>
                     <option value={'Todos'}> Todos </option>
                 </select>
-
                 { filterByStatus && 
                     <button
-                        className='flex justify-end text-2xl ml-2 px-4 text-yellow'
+                        className="text-2xl text-yellow"
                         onClick={() => { changeFilterByStatus('') }}
                     >
-                        <MdOutlineCancel 
-                            className='hover:cursor-pointer'
-                        />
+                        <MdOutlineCancel className="hover:cursor-pointer" />
                     </button>
                 }
             </div>
-
-            <div className='flex gap-4 items-center'>
-                <label htmlFor="amountMin">Monto</label>
-                <div className="flex flex-col">
-                    <label htmlFor="amountMin">Mínimo</label>
-                    <input
-                        className={'border-2 rounded-full' + filteredAmountRangeStyles}
-                        name="amountMin"
-                        id="amountMin"
-                        type="number"
-                        min={1}
-                        value={filterByAmountRangeMin}
-                        onChange={(e) => changeFilterByAmountRangeMin(+e.target.value)}
-                    />
-                </div>
-                <div className="self-end">
-                    -
-                </div>
-                <div className="flex flex-col">
-                    <label htmlFor="amountMax">Máximo</label>
-                    <input
-                        className={'border-2 rounded-full' + filteredAmountRangeStyles}
-                        name="amountMax"
-                        id="amountMax"
-                        type="number"
-                        value={filterByAmountRangeMax}
-                        onChange={(e) => {
-                            changeFilterByAmountRangeMax(+e.target.value)
-                        }}
-                    />
-                </div>
-                
-                {filterByAmountRangeMin!=0 && filterByAmountRangeMax!=0 && 
-                    <button
-                        className='flex justify-end text-2xl ml-2 px-4 text-yellow'
-                        onClick={() => { 
-                            changeFilterByAmountRangeMin(0) 
-                            changeFilterByAmountRangeMax(0)
-                        }}
-                    >
-                        <MdOutlineCancel 
-                            className='hover:cursor-pointer'
+    
+            {/* Filtro por Monto */}
+            <div className="flex items-center gap-4">
+                <label className="w-20">Monto</label>
+                <div className="flex items-center gap-2">
+                    <div className="flex flex-col">
+                        <label htmlFor="amountMin" className="text-sm">Mínimo</label>
+                        <input
+                            className={'border-2 w-36 p-1 text-center' + filteredAmountRangeStyles}
+                            name="amountMin"
+                            id="amountMin"
+                            type="number"
+                            min={1}
+                            value={filterByAmountRangeMin}
+                            onChange={(e) => changeFilterByAmountRangeMin(+e.target.value)}
                         />
-                    </button>
-                }
-            </div>
-
-            <div className='flex gap-4 items-center'>
-                <label htmlFor="dateMin">Fecha</label>
-                <div className="flex flex-col">
-                    <label htmlFor="dateMin">Inicio</label>
-                    <input
-                        className={'border-2 rounded-full' + filteredDateRangeStyles}
-                        name="dateMin"
-                        id="dateMin"
-                        type="date"
-                        min={1}
-                        value={filterByDateRangeMin ? filterByDateRangeMin.toISOString().split('T')[0] : ''}
-                        onChange={(e) => changeFilterByDateRangeMin(new Date(e.target.value))}
-                    />
-                </div>
-                <div className="self-end">
-                    -
-                </div>
-                <div className="flex flex-col">
-                    <label htmlFor="dateMax">Final</label>
-                    <input
-                        className={'border-2 rounded-full' + filteredDateRangeStyles}
-                        name="dateMax"
-                        id="dateMax"
-                        type="date"
-                        value={filterByDateRangeMax ? filterByDateRangeMax.toISOString().split('T')[0] : ''}
-                        onChange={(e) => {
-                            changeFilterByDateRangeMax(new Date(e.target.value))
-                        }}
-                    />
-                </div>
-                
-                {filterByDateRangeMin!=null && filterByDateRangeMax!=null && 
-                    <button
-                        className='flex justify-end text-2xl ml-2 px-4 text-yellow'
-                        onClick={() => { 
-                            changeFilterByDateRangeMin(null) 
-                            changeFilterByDateRangeMax(null)
-                        }}
-                    >
-                        <MdOutlineCancel 
-                            className='hover:cursor-pointer'
+                    </div>
+                    <span>-</span>
+                    <div className="flex flex-col">
+                        <label htmlFor="amountMax" className="text-sm">Máximo</label>
+                        <input
+                            className={'border-2 w-36 p-1 text-center' + filteredAmountRangeStyles}
+                            name="amountMax"
+                            id="amountMax"
+                            type="number"
+                            value={filterByAmountRangeMax}
+                            onChange={(e) => changeFilterByAmountRangeMax(+e.target.value)}
                         />
-                    </button>
-                }
+                    </div>
+                    {(filterByAmountRangeMin !== 0 || filterByAmountRangeMax !== 0) && 
+                        <button
+                            className="text-2xl text-yellow"
+                            onClick={() => { 
+                                changeFilterByAmountRangeMin(0) 
+                                changeFilterByAmountRangeMax(0)
+                            }}
+                        >
+                            <MdOutlineCancel className="hover:cursor-pointer" />
+                        </button>
+                    }
+                </div>
             </div>
-            
+    
+            {/* Filtro por Fecha */}
+            <div className="flex items-center gap-4">
+                <label className="w-20">Fecha</label>
+                <div className="flex items-center gap-2">
+                    <div className="flex flex-col">
+                        <label htmlFor="dateMin" className="text-sm">Inicio</label>
+                        <input
+                            className={'border-2 w-36 p-1 text-center' + filteredDateRangeStyles}
+                            name="dateMin"
+                            id="dateMin"
+                            type="date"
+                            min={'2010-01-01'}
+                            max={new Date().toISOString().split('T')[0]}
+                            value={filterByDateRangeMin ? filterByDateRangeMin.toISOString().split('T')[0] : ''}
+                            onChange={(e) => changeFilterByDateRangeMin(new Date(e.target.value))}
+                        />
+                    </div>
+                    <span>-</span>
+                    <div className="flex flex-col">
+                        <label htmlFor="dateMax" className="text-sm">Final</label>
+                        <input
+                            className={'border-2 w-36 p-1 text-center' + filteredDateRangeStyles}
+                            name="dateMax"
+                            id="dateMax"
+                            type="date"
+                            min={'2010-01-01'}
+                            max={new Date().toISOString().split('T')[0]}
+                            value={filterByDateRangeMax ? filterByDateRangeMax.toISOString().split('T')[0] : ''}
+                            onChange={(e) => changeFilterByDateRangeMax(new Date(e.target.value))}
+                        />
+                    </div>
+                    {(filterByDateRangeMin !== null || filterByDateRangeMax !== null) && 
+                        <button
+                            className="text-2xl text-yellow"
+                            onClick={() => { 
+                                changeFilterByDateRangeMin(null) 
+                                changeFilterByDateRangeMax(null)
+                            }}
+                        >
+                            <MdOutlineCancel className="hover:cursor-pointer" />
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
     );
 }

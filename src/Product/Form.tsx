@@ -5,7 +5,7 @@ import ErrorForm from "../shared/components/ErrorForm";
 import useProductInventoryStore from "./Store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { setAuthHeader, setAuthUser } from "../shared/utils/authentication";
+import { getAuthUser, setAuthHeader, setAuthUser } from "../shared/utils/authentication";
 
 const MAXLENGTH_NAME = 100
 const MAXLENGTH_CODE = 10
@@ -17,12 +17,18 @@ function Form() {
 
     const submitForm = async (data: ProductInventoryDataForm) => {
         let action = '', result;
+        const loggedUser = getAuthUser();
+        const reqData = {
+            ...data,
+            idUser: loggedUser?.idUser,
+            paramLoggedIdUser: loggedUser?.idUser
+        }
         
         if (activeEditingId === 0) {
-            result = await addProductInventory(data);
+            result = await addProductInventory(reqData);
             action = 'agregado';
         } else {
-            result = await updateProductInventory(data);
+            result = await updateProductInventory(reqData);
             action = 'editado';
         }
 
@@ -39,7 +45,7 @@ function Form() {
             }else{
                 await Swal.fire({
                     title: `Producto de inventario ${action}`,
-                    text: `Se ha ${action} el producto`,
+                    text: `Se ha ${action} el producto ${reqData.name}`,
                     icon: 'success',
                     confirmButtonText: 'OK',
                     timer: 3000,
