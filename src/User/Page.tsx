@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import AsideBar from "../shared/components/AsideBar"
 import useUserStore from "./Store"
 import { MdOutlineDelete, MdModeEdit, MdOutlineFileDownload, MdOutlineSettingsBackupRestore } from "react-icons/md"
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
@@ -67,7 +66,6 @@ function UserManagement() {
 
     return (
         <div className="bg-black h-full w-full">
-            <AsideBar />
             <header className="flex ml-12 h-20 w-0.90 items-center text-black bg-yellow justify-between px-4">
                 <h1 className="text-4xl uppercase">Usuarios</h1>
                 <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} changeSearchType={changeSearchType} >

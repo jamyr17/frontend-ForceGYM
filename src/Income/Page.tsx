@@ -1,5 +1,4 @@
 import { MdModeEdit, MdOutlineDelete, MdOutlineFileDownload, MdOutlineSettingsBackupRestore } from "react-icons/md";
-import AsideBar from "../shared/components/AsideBar";
 import Modal from "../shared/components/Modal";
 import ModalFilter from "../shared/components/ModalFilter";
 import SearchInput from "../shared/components/SearchInput";
@@ -70,7 +69,6 @@ function EconomicIncomeManagement() {
 
     return ( 
         <div className="bg-black h-full w-full">
-            <AsideBar />
             <header className="flex ml-12 h-20 w-0.90 items-center text-black bg-yellow justify-between px-4">
                 <h1 className="text-4xl uppercase">INGRESOS</h1>
                 <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} changeSearchType={changeSearchType} >

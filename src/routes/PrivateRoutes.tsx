@@ -6,6 +6,7 @@ import EconomicIncomeManagement from "../Income/Page";
 import EconomicExpenseManagement from "../Expense/Page";
 import ProductInventoryManagement from "../Product/Page";
 import { useCommonDataStore } from "../shared/CommonDataStore";
+import AsideBar from "../shared/components/AsideBar";
 
 function PrivateRoutes () {
     // fetchear los datos comunes: roles, tipos de pago, etc. para solo hacerlo 1 vez
@@ -29,6 +30,8 @@ function PrivateRoutes () {
     }, [])
 
     return (
+        <>
+        <AsideBar />
         <Routes>
             <Route 
                 path="usuarios" 
@@ -55,6 +58,7 @@ function PrivateRoutes () {
                 }
             />
         </Routes>
+        </>
     );
 }
 
