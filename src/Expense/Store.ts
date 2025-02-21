@@ -22,6 +22,7 @@ type EconomicExpenseStore = {
     filterByAmountRangeMin: number;
     filterByDateRangeMax: Date | null;
     filterByDateRangeMin: Date | null;
+    filterByMeanOfPayment: number;
 
     fetchEconomicExpenses: () => Promise<any>;
     getEconomicExpenseById: (id: number) => void;
@@ -40,6 +41,7 @@ type EconomicExpenseStore = {
     changeFilterByAmountRangeMin: (newFilter: number) => void;
     changeFilterByDateRangeMax: (newFilter: Date | null) => void;
     changeFilterByDateRangeMin: (newFilter: Date | null) => void;
+    changeFilterByMeanOfPayment: (newFilter: number) => void;
 
     showModalForm: () => void;
     closeModalForm: () => void;
@@ -68,6 +70,7 @@ export const useEconomicExpenseStore = create<EconomicExpenseStore>()(
         filterByAmountRangeMin: 0,
         filterByDateRangeMax: null,
         filterByDateRangeMin: null ,
+        filterByMeanOfPayment: 0,
 
         fetchEconomicExpenses: async () => {
             const state = useEconomicExpenseStore.getState();
@@ -88,6 +91,9 @@ export const useEconomicExpenseStore = create<EconomicExpenseStore>()(
             }
             if (state.filterByDateRangeMax !== null && state.filterByDateRangeMin !== null) {
                 filters += `&filterByDateRangeMax=${formatDateForParam(state.filterByDateRangeMax)}&filterByDateRangeMin=${formatDateForParam(state.filterByDateRangeMin)}`;
+            }
+            if (state.filterByMeanOfPayment != 0){
+                filters += `&filterByMeanOfPayment=${state.filterByMeanOfPayment}`
             }
 
             const result = await getData(
@@ -135,6 +141,7 @@ export const useEconomicExpenseStore = create<EconomicExpenseStore>()(
         changeFilterByAmountRangeMin: (newFilter) => set(() => ({ filterByAmountRangeMin: newFilter })),
         changeFilterByDateRangeMax: (newFilter) => set(() => ({ filterByDateRangeMax: newFilter })),
         changeFilterByDateRangeMin: (newFilter) => set(() => ({ filterByDateRangeMin: newFilter })),
+        changeFilterByMeanOfPayment: (newFilter) => set(() => ({ filterByMeanOfPayment: newFilter })),
 
         showModalForm: () => set(() => ({ modalForm: true })),
         closeModalForm: () => set(() => ({ modalForm: false })),
