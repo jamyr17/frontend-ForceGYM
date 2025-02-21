@@ -35,6 +35,7 @@ function EconomicIncomeManagement() {
         filterByAmountRangeMax,
         filterByDateRangeMin,
         filterByDateRangeMax,
+        filterByMeanOfPayment,
         fetchEconomicIncomes,
         getEconomicIncomeById,
         changePage,
@@ -65,7 +66,7 @@ function EconomicIncomeManagement() {
         }
         
         fetchData()
-    }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax])
+    }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByAmountRangeMin, filterByAmountRangeMax, filterByDateRangeMin, filterByDateRangeMax, filterByMeanOfPayment,])
 
     return ( 
         <div className="bg-black h-full w-full">

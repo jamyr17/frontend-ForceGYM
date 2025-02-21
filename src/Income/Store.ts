@@ -22,6 +22,7 @@ type EconomicIncomeStore = {
     filterByAmountRangeMin: number;
     filterByDateRangeMax: Date | null;
     filterByDateRangeMin: Date | null;
+    filterByMeanOfPayment: number;
 
     fetchEconomicIncomes: () => Promise<any>;
     getEconomicIncomeById: (id: number) => void;
@@ -40,6 +41,7 @@ type EconomicIncomeStore = {
     changeFilterByAmountRangeMin: (newFilter: number) => void;
     changeFilterByDateRangeMax: (newFilter: Date | null) => void;
     changeFilterByDateRangeMin: (newFilter: Date | null) => void;
+    changeFilterByMeanOfPayment: (newFilter: number) => void;
 
     showModalForm: () => void;
     closeModalForm: () => void;
@@ -67,7 +69,8 @@ export const useEconomicIncomeStore = create<EconomicIncomeStore>()(
         filterByAmountRangeMax: 0,
         filterByAmountRangeMin: 0,
         filterByDateRangeMax: null,
-        filterByDateRangeMin: null ,
+        filterByDateRangeMin: null,
+        filterByMeanOfPayment: 0,
 
         fetchEconomicIncomes: async () => {
             const state = useEconomicIncomeStore.getState();
@@ -88,6 +91,9 @@ export const useEconomicIncomeStore = create<EconomicIncomeStore>()(
             }
             if (state.filterByDateRangeMax !== null && state.filterByDateRangeMin !== null) {
                 filters += `&filterByDateRangeMax=${formatDateForParam(state.filterByDateRangeMax)}&filterByDateRangeMin=${formatDateForParam(state.filterByDateRangeMin)}`;
+            }
+            if (state.filterByMeanOfPayment != 0){
+                filters += `&filterByMeanOfPayment=${state.filterByMeanOfPayment}`
             }
 
             const result = await getData(
@@ -135,6 +141,7 @@ export const useEconomicIncomeStore = create<EconomicIncomeStore>()(
         changeFilterByAmountRangeMin: (newFilter) => set(() => ({ filterByAmountRangeMin: newFilter })),
         changeFilterByDateRangeMax: (newFilter) => set(() => ({ filterByDateRangeMax: newFilter })),
         changeFilterByDateRangeMin: (newFilter) => set(() => ({ filterByDateRangeMin: newFilter })),
+        changeFilterByMeanOfPayment: (newFilter) => set(() => ({ filterByMeanOfPayment: newFilter })),
 
         showModalForm: () => set(() => ({ modalForm: true })),
         closeModalForm: () => set(() => ({ modalForm: false })),
