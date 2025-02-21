@@ -7,6 +7,7 @@ import EconomicExpenseManagement from "../Expense/Page";
 import ProductInventoryManagement from "../Product/Page";
 import { useCommonDataStore } from "../shared/CommonDataStore";
 import AsideBar from "../shared/components/AsideBar";
+import ClientManagement from "../Client/Page";
 
 function PrivateRoutes () {
     // fetchear los datos comunes: roles, tipos de pago, etc. para solo hacerlo 1 vez
@@ -55,6 +56,12 @@ function PrivateRoutes () {
                 path="inventario" 
                 element={
                     <ProductInventoryManagement/>
+                }
+            />
+            <Route 
+                path="cliente" 
+                element={
+                    <ClientManagement/>
                 }
             />
         </Routes>

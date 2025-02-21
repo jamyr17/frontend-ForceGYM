@@ -1,4 +1,4 @@
-import { EconomicExpense, EconomicExpenseDataForm, EconomicIncome, EconomicIncomeDataForm, ProductInventory, ProductInventoryDataForm, User, UserDataForm } from ".";
+import { Client, ClientDataForm, EconomicExpense, EconomicExpenseDataForm, EconomicIncome, EconomicIncomeDataForm, ProductInventory, ProductInventoryDataForm, User, UserDataForm } from ".";
 
 export function mapUserToDataForm(user: User): UserDataForm {
     return {
@@ -57,4 +57,23 @@ export function mapProductInventoryToDataForm(product : ProductInventory) : Prod
         quantity: product.quantity,
         isDeleted: product.isDeleted
     }
+}
+
+export function mapClientToDataForm(client: Client): ClientDataForm {
+    const { idClient, ...healthData } = client.healthQuestionaire;
+
+    return {
+        idClient: client.idClient,
+        idUser: client.user.idUser,
+        idTypeClient: client.clientType.idTypeClient,
+        registrationDate: client.registrationDate,
+        emergencyContact: client.emergencyContact,
+        signatureImage: client.signatureImage,
+
+        // HealthQuestionaire
+        ...healthData,
+
+        // Person 
+        ...client.person,
+    };
 }
