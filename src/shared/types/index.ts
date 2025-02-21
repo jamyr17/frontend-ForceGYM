@@ -18,6 +18,11 @@ export type ActivityType = {
     name: string
 }
 
+export type ClientType = {
+    idTypeClient: number
+    name: string
+}
+
 // -----------------------------------------------------
 
 export type Person = {
@@ -41,20 +46,7 @@ export type User = {
     token: string
 }
 
-export type UserDataForm = {
-    idRole: number
-    idUser: number
-    idPerson: number
-    name: string
-    firstLastName: string
-    secondLastName: string
-    birthday: Date
-    identificationNumber: string
-    email: string
-    phoneNumber: string
-    gender: string
-    username: string
-    isDeleted: number
+export type UserDataForm = Pick<User, 'idUser' | 'username' | 'isDeleted'> & Pick<Role, 'idRole'> & Person & {
     password: string
     confirmPassword: string
 }
@@ -73,25 +65,16 @@ export type EconomicIncome = {
     isDeleted: number
 }
 
-export type EconomicIncomeDataForm = {
-    idEconomicIncome: number
-    idUser: User['idUser']
-    registrationDate: Date
-    voucherNumber: string
-    detail: string
+export type EconomicIncomeDataForm = Omit<EconomicIncome, 'user' | 'meanOfPayment' | 'activityType'> & Pick<User, 'idUser'> & {
     idMeanOfPayment: MeanOfPayment['idMeanOfPayment']
-    amount: number
     idActivityType: ActivityType['idActivityType']
-    isDeleted: number
 }
 
 export type EconomicExpense = Omit<EconomicIncome, "activityType" | "idEconomicIncome"> & {
     idEconomicExpense: number
 }
 
-export type EconomicExpenseDataForm = Omit<EconomicIncomeDataForm, 'idActivityType' | "idEconomicIncome"> & {
-    idEconomicExpense: number
-}
+export type EconomicExpenseDataForm = Omit<EconomicIncomeDataForm, 'idActivityType' | "idEconomicIncome"> & Pick<EconomicExpense, 'idEconomicExpense'>
 
 // -----------------------------------------------------
 
@@ -105,6 +88,32 @@ export type ProductInventory = {
     isDeleted: number
 }
 
-export type ProductInventoryDataForm = Omit<ProductInventory, 'user'> & {
-    idUser: User['idUser']
+export type ProductInventoryDataForm = Omit<ProductInventory, 'user'> & Pick<User, 'idUser'>
+
+// --------------------------------------------------------
+export type HealthQuestionaire = Pick<Client, 'idClient'> & {
+    idHealthQuestionaire: number
+    diabetes: boolean
+    hypertension: boolean
+    muscleInjuries: boolean
+    boneJointIssues: boolean
+    balanceLoss: boolean
+    cardiovascularDisease: boolean
+    breathingIssues: boolean
+    isDeleted: number
 }
+
+export type Client = {
+    idClient: number
+    user: User
+    person: Person
+    clientType: ClientType
+    healthQuestionaire: HealthQuestionaire
+    registrationDate: Date
+    emergencyContact: string
+    signatureImage: string
+    isDeleted: number
+}
+
+export type ClientDataForm = Omit<Client, 'user' | 'person' | 'clientType' | 'healthQuestionaire'> & HealthQuestionaire & Person & Pick<User, 'idUser'>  & Pick<ClientType, 'idTypeClient'>
+

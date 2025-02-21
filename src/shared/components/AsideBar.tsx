@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { IoMdMenu } from 'react-icons/io';
 import { FaRegUser, FaMoneyBillAlt, FaMoneyBillWaveAlt, FaSignOutAlt } from 'react-icons/fa';
+import { GiWeightLiftingUp } from "react-icons/gi";
 import { MdOutlineInventory } from 'react-icons/md';
 import { Link } from 'react-router';
 import { getAuthUser } from '../utils/authentication';
@@ -43,6 +44,11 @@ function AsideBar() {
         <Link to={'/gestion/usuarios'} className="flex items-center gap-2 p-2 hover:bg-yellow hover:rounded-b-sm hover:text-black hover:cursor-pointer">
           <FaRegUser />
           {isOpen && <p>Usuarios</p>}
+        </Link>
+
+        <Link  to={'/gestion/cliente'} className="flex items-center gap-2 p-2 hover:bg-yellow hover:rounded-b-sm hover:text-black hover:cursor-pointer">
+          <GiWeightLiftingUp />
+          {isOpen && <p>Clientes</p>}
         </Link>
 
         <Link to={'/gestion/ingresos'} className="flex items-center gap-2 p-2 hover:bg-yellow hover:rounded-b-sm hover:text-black hover:cursor-pointer">
