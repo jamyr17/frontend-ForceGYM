@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { deleteData, getData, postData, putData } from "../shared/services/gym";
 import { Client, ClientDataForm } from "../shared/types";
+import { formatDateForParam } from "../shared/utils/format";
 
 type ClientStore = {
     clients: Client[];
@@ -17,13 +18,13 @@ type ClientStore = {
     searchType: number;
     searchTerm: string;
     filterByStatus: string;
-    filterByDiabetes: boolean;
-    filterByHypertension: boolean;
-    filterByMuscleInjuries: boolean;
-    filterByBoneJointIssues: boolean;
-    filterByBalanceLoss: boolean;
-    filterByCardiovascularDisease: boolean;
-    filterByBreathingIssues: boolean;
+    filterByDiabetes: boolean | null;
+    filterByHypertension: boolean | null;
+    filterByMuscleInjuries: boolean | null;
+    filterByBoneJointIssues: boolean | null;
+    filterByBalanceLoss: boolean | null;
+    filterByCardiovascularDisease: boolean | null;
+    filterByBreathingIssues: boolean | null;
     filterByBirthDateRangeMax: Date | null;
     filterByBirthDateRangeMin: Date | null;
     filterByClientType: number;
@@ -41,13 +42,13 @@ type ClientStore = {
     changeSearchType: (newSearchType: number) => void;
     changeSearchTerm: (newSearchTerm: string) => void;
     changeFilterByStatus: (newFilterByStatus: string) => void;
-    changeFilterByDiabetes: (newFilter: boolean) => void;
-    changeFilterByHypertension: (newFilter: boolean) => void;
-    changeFilterByMuscleInjuries: (newFilter: boolean) => void;
-    changeFilterByBoneJointIssues: (newFilter: boolean) => void;
-    changeFilterByBalanceLoss: (newFilter: boolean) => void;
-    changeFilterByCardiovascularDisease: (newFilter: boolean) => void;
-    changeFilterByBreathingIssues: (newFilter: boolean) => void;
+    changeFilterByDiabetes: (newFilter: boolean | null) => void;
+    changeFilterByHypertension: (newFilter: boolean | null) => void;
+    changeFilterByMuscleInjuries: (newFilter: boolean | null) => void;
+    changeFilterByBoneJointIssues: (newFilter: boolean | null) => void;
+    changeFilterByBalanceLoss: (newFilter: boolean | null) => void;
+    changeFilterByCardiovascularDisease: (newFilter: boolean | null) => void;
+    changeFilterByBreathingIssues: (newFilter: boolean | null) => void;
     changeFilterByBirthDateRangeMax: (newFilter: Date | null) => void;
     changeFilterByBirthDateRangeMin: (newFilter: Date | null) => void;
     changeFilterByClientType: (newFilter : number) => void;
@@ -75,13 +76,13 @@ export const useClientStore = create<ClientStore>()(
         searchType: 1,
         searchTerm: '',
         filterByStatus: '',
-        filterByDiabetes: false,
-        filterByHypertension: false,
-        filterByMuscleInjuries: false,       
-        filterByBoneJointIssues: false,
-        filterByBalanceLoss: false,
-        filterByCardiovascularDisease: false,
-        filterByBreathingIssues: false,
+        filterByDiabetes: null,
+        filterByHypertension: null,
+        filterByMuscleInjuries: null,       
+        filterByBoneJointIssues: null,
+        filterByBalanceLoss: null,
+        filterByCardiovascularDisease: null,
+        filterByBreathingIssues: null,
         filterByBirthDateRangeMax: null,
         filterByBirthDateRangeMin: null,
         filterByClientType: 0,
@@ -100,7 +101,30 @@ export const useClientStore = create<ClientStore>()(
             if (state.filterByStatus !== '') {
                 filters += `&filterByStatus=${state.filterByStatus}`;
             }
-            
+            if(state.filterByDiabetes!=null){
+                filters += `&filterByDiabetes=${state.filterByDiabetes}`;
+            }
+            if(state.filterByMuscleInjuries!=null){
+                filters += `&filterByMuscleInjuries=${state.filterByMuscleInjuries}`;
+            }
+            if(state.filterByHypertension!=null){
+                filters += `&filterByHypertension=${state.filterByHypertension}`;
+            }
+            if(state.filterByBoneJointIssues!=null){
+                filters += `&filterByBoneJointIssues=${state.filterByBoneJointIssues}`;
+            }
+            if(state.filterByBalanceLoss!=null){
+                filters += `&filterByBalanceLoss=${state.filterByBalanceLoss}`;
+            }
+            if(state.filterByCardiovascularDisease!=null){
+                filters += `&filterByCardiovascularDisease=${state.filterByCardiovascularDisease}`;
+            }
+            if(state.filterByBreathingIssues!=null){
+                filters += `&filterByBreathingIssues=${state.filterByBreathingIssues}`;
+            }
+            if (state.filterByBirthDateRangeMax !== null && state.filterByBirthDateRangeMin !== null) {
+                filters += `&filterByDateBirthStart=${formatDateForParam(state.filterByBirthDateRangeMin)}&filterByDateBirthEnd=${formatDateForParam(state.filterByBirthDateRangeMax)}`;
+            }
 
             const result = await getData(
                 `${import.meta.env.VITE_URL_API}client/list?size=${state.size}&page=${state.page}${filters}`

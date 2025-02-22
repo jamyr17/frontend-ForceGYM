@@ -18,8 +18,8 @@ export function FilterButton() {
         filterByClientType
     } = useClientStore()
     const filteringStyles = (
-        filterByStatus!='' || filterByBalanceLoss!=false || filterByBoneJointIssues!=false || filterByBreathingIssues!=false || filterByCardiovascularDisease!=false
-        || filterByDiabetes!=false || filterByMuscleInjuries!=false || filterByHypertension!=false || filterByBirthDateRangeMax!=null || filterByBirthDateRangeMin!=null
+        filterByStatus!='' || filterByBalanceLoss!=null || filterByBoneJointIssues!=null || filterByBreathingIssues!=null || filterByCardiovascularDisease!=null
+        || filterByDiabetes!=null || filterByMuscleInjuries!=null || filterByHypertension!=null || filterByBirthDateRangeMax!=null || filterByBirthDateRangeMin!=null
         || filterByClientType!=0
     ) && ' bg-white outline-none'
 
@@ -46,25 +46,33 @@ export function FilterSelect() {
         filterByHypertension,
         filterByBirthDateRangeMax,
         filterByBirthDateRangeMin,
-        filterByClientType,
         changeFilterByBalanceLoss,
         changeFilterByBirthDateRangeMax,
         changeFilterByBirthDateRangeMin,
         changeFilterByBoneJointIssues,
         changeFilterByBreathingIssues,
         changeFilterByCardiovascularDisease,
-        changeFilterByClientType,
         changeFilterByDiabetes,
         changeFilterByHypertension,
         changeFilterByMuscleInjuries,
         changeFilterByStatus,
-    } = useClientStore()
-    const filteredStatusSelectStyles = filterByStatus!='' && ' px-0.5 border-yellow text-yellow'
-    const filteredBirthDateRangeStyles = (filterByBirthDateRangeMin !=null && filterByBirthDateRangeMax!=null)  && ' px-0.5 border-yellow text-yellow'
+    } = useClientStore();
+
+    const filteredStatusSelectStyles = filterByStatus !== '' && ' px-0.5 border-yellow text-yellow';
+    const filteredBirthDateRangeStyles = (filterByBirthDateRangeMin !== null && filterByBirthDateRangeMax !== null)  && ' px-0.5 border-yellow text-yellow';
+
+    const filters = [
+        { label: "Diabetes", state: filterByDiabetes, changeState: changeFilterByDiabetes },
+        { label: "Hipertensión", state: filterByHypertension, changeState: changeFilterByHypertension },
+        { label: "Lesiones musculares", state: filterByMuscleInjuries, changeState: changeFilterByMuscleInjuries },
+        { label: "Pérdida de equilibrio", state: filterByBalanceLoss, changeState: changeFilterByBalanceLoss },
+        { label: "Problemas óseos/articulares", state: filterByBoneJointIssues, changeState: changeFilterByBoneJointIssues },
+        { label: "Problemas respiratorios", state: filterByBreathingIssues, changeState: changeFilterByBreathingIssues },
+        { label: "Enfermedad cardiovascular", state: filterByCardiovascularDisease, changeState: changeFilterByCardiovascularDisease },
+    ];
 
     return (
         <div className="flex flex-col gap-4">
-            {/* Filtro por Estado */}
             <div className="flex items-center gap-4">
                 <label htmlFor="status" className="w-20">Estado</label>
                 <select 
@@ -72,47 +80,36 @@ export function FilterSelect() {
                     name="status"
                     id="status"
                     value={filterByStatus} 
-                    onChange={(e) => {
-                        if(Number(e.target.value) === 0){
-                            changeFilterByStatus('')
-                        }else{
-                            changeFilterByStatus(e.target.value)
-                        }
-                    }}
+                    onChange={(e) => changeFilterByStatus(e.target.value || '')}
                 >
-                    <option value={0}> Activos </option>
-                    <option value={'Inactivos'}> Inactivos </option>
-                    <option value={'Todos'}> Todos </option>
+                    <option value=""> Activos </option>
+                    <option value="Inactivos"> Inactivos </option>
+                    <option value="Todos"> Todos </option>
                 </select>
-                { filterByStatus && 
-                    <button
-                        className="text-2xl text-yellow"
-                        onClick={() => { changeFilterByStatus('') }}
-                    >
+                {filterByStatus && 
+                    <button className="text-2xl text-yellow" onClick={() => changeFilterByStatus('')}>
                         <MdOutlineCancel className="hover:cursor-pointer" />
                     </button>
                 }
             </div>
-    
-            {/* Filtro por diabetes */}
-            <div className="flex items-center gap-4">
-                <label className="w-20">Diabetes</label>
-                <div className="flex items-center gap-2">
-                    <label className="w-20" htmlFor="diabetesYes">Sí</label>
-                    <input
-                        id="diabetesYes"
-                        type="radio"
-                    />
-                    
-                    <label className="w-20" htmlFor="diabetesNo">No</label>
-                    <input
-                        id="diabetesNo"
-                        type="radio"
-                    />
+
+            {filters.map(({ label, state, changeState }) => (
+                <div key={label} className="flex items-center gap-4">
+                    <label className="w-40">{label}</label>
+                    <div className="flex items-center gap-2">
+                        <label htmlFor={`${label}Yes`} className="w-20">Sí</label>
+                        <input id={`${label}Yes`} type="radio" checked={state === true} onChange={() => changeState(true)} />
+                        <label htmlFor={`${label}No`} className="w-20">No</label>
+                        <input id={`${label}No`} type="radio" checked={state === false} onChange={() => changeState(false)} />
+                        {state !== null && 
+                            <button className="text-2xl text-yellow" onClick={() => changeState(null)}>
+                                <MdOutlineCancel className="hover:cursor-pointer" />
+                            </button>
+                        }
+                    </div>
                 </div>
-            </div>
-    
-            {/* Filtro por Fecha de nacimientp*/}
+            ))}
+
             <div className="flex items-center gap-4">
                 <label className="w-20">Fecha de nacimiento</label>
                 <div className="flex items-center gap-2">
@@ -147,8 +144,8 @@ export function FilterSelect() {
                         <button
                             className="text-2xl text-yellow"
                             onClick={() => { 
-                                changeFilterByBirthDateRangeMin(null) 
-                                changeFilterByBirthDateRangeMax(null)
+                                changeFilterByBirthDateRangeMin(null); 
+                                changeFilterByBirthDateRangeMax(null);
                             }}
                         >
                             <MdOutlineCancel className="hover:cursor-pointer" />

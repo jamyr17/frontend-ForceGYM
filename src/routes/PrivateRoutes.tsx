@@ -11,7 +11,7 @@ import ClientManagement from "../Client/Page";
 
 function PrivateRoutes () {
     // fetchear los datos comunes: roles, tipos de pago, etc. para solo hacerlo 1 vez
-    const { fetchRoles, fetchMeansOfPayment, fetchActivityTypes } = useCommonDataStore()
+    const { fetchRoles, fetchMeansOfPayment, fetchActivityTypes, fetchTypesClient } = useCommonDataStore()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -19,8 +19,9 @@ function PrivateRoutes () {
             const resultRoles = await fetchRoles()
             const resultMeansOfPayment = await fetchMeansOfPayment()
             const resultActivityTypes = await fetchActivityTypes()
+            //const resultTypesClient = await fetchTypesClient()
 
-            if(resultRoles.logout || resultMeansOfPayment.logout || resultActivityTypes.logout){
+            if(resultRoles.logout || resultMeansOfPayment.logout || resultActivityTypes.logout ){
                 setAuthHeader(null)
                 setAuthUser(null)
                 navigate('/login', {replace: true})

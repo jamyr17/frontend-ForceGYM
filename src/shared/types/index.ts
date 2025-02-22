@@ -18,9 +18,14 @@ export type ActivityType = {
     name: string
 }
 
-export type ClientType = {
+export type TypeClient = {
     idTypeClient: number
     name: string
+    dailyCharge: number
+    weeklyCharge: number
+    biweeklyCharge: number
+    monthlyCharge: number
+    isDeleted: number
 }
 
 // -----------------------------------------------------
@@ -91,8 +96,8 @@ export type ProductInventory = {
 export type ProductInventoryDataForm = Omit<ProductInventory, 'user'> & Pick<User, 'idUser'>
 
 // --------------------------------------------------------
-export type HealthQuestionaire = Pick<Client, 'idClient'> & {
-    idHealthQuestionaire: number
+export type HealthQuestionnaire = Pick<Client, 'idClient'> & {
+    idHealthQuestionnaire: number
     diabetes: boolean
     hypertension: boolean
     muscleInjuries: boolean
@@ -107,13 +112,13 @@ export type Client = {
     idClient: number
     user: User
     person: Person
-    clientType: ClientType
-    healthQuestionaire: HealthQuestionaire
+    typeClient: TypeClient
+    healthQuestionnaire: HealthQuestionnaire
     registrationDate: Date
     emergencyContact: string
     signatureImage: string
     isDeleted: number
 }
 
-export type ClientDataForm = Omit<Client, 'user' | 'person' | 'clientType' | 'healthQuestionaire'> & HealthQuestionaire & Person & Pick<User, 'idUser'>  & Pick<ClientType, 'idTypeClient'>
+export type ClientDataForm = Omit<Client, 'user' | 'person' | 'typeClient' | 'healthQuestionnaire'> & HealthQuestionnaire & Person & Pick<User, 'idUser'>  & Pick<TypeClient, 'idTypeClient'>
 
