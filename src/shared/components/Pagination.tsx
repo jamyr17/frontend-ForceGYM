@@ -17,8 +17,12 @@ function Pagination({ page, size, totalRecords, onSizeChange, onPageChange } : P
         (
         <div className="flex mt-4 border-t-2 border-slate-200 text-yellow text-[16px] px-8 py-4">
             <div className="flex-auto">
-                <span> 
-                    {(size * page - size + 1)}-{(size * page) > totalRecords ? totalRecords : (size * page)} de {totalRecords} registros 
+                <span>
+                    {totalRecords === 1 ? (
+                        `${totalRecords} registro`
+                    ) : (
+                        `${size * (page - 1) + 1}-${Math.min(size * page, totalRecords)} de ${totalRecords} registros`
+                    )}
                 </span>
             </div>
 

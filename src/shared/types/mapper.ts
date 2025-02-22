@@ -60,12 +60,12 @@ export function mapProductInventoryToDataForm(product : ProductInventory) : Prod
 }
 
 export function mapClientToDataForm(client: Client): ClientDataForm {
-    const { idClient, ...healthData } = client.healthQuestionaire;
+    const { idClient, ...healthData } = client.healthQuestionnaire;
 
     return {
         idClient: client.idClient,
         idUser: client.user.idUser,
-        idTypeClient: client.clientType.idTypeClient,
+        idTypeClient: client.typeClient.idTypeClient,
         registrationDate: client.registrationDate,
         emergencyContact: client.emergencyContact,
         signatureImage: client.signatureImage,

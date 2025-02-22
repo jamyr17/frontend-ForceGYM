@@ -31,6 +31,16 @@ function ClientManagement() {
         searchType,
         searchTerm,
         filterByStatus,
+        filterByBalanceLoss,
+        filterByBirthDateRangeMax,
+        filterByBirthDateRangeMin,
+        filterByBoneJointIssues,
+        filterByBreathingIssues,
+        filterByCardiovascularDisease,
+        filterByClientType,
+        filterByDiabetes,
+        filterByHypertension,
+        filterByMuscleInjuries,
         fetchClients,
         getClientById,
         changePage,
@@ -61,7 +71,7 @@ function ClientManagement() {
             }
             
             fetchData()
-        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus ])
+        }, [page, size, searchType, searchTerm, orderBy, directionOrderBy, filterByStatus, filterByBalanceLoss, filterByBirthDateRangeMax, filterByBirthDateRangeMin, filterByBoneJointIssues, filterByBreathingIssues, filterByCardiovascularDisease, filterByClientType, filterByDiabetes, filterByHypertension, filterByMuscleInjuries, ])
 
     return ( 
         <div className="bg-black h-full w-full">
@@ -145,7 +155,7 @@ function ClientManagement() {
                                 <td className="py-2">{client.person.identificationNumber}</td>
                                 <td className="py-2">{client.person.name}</td>
                                 <td className="py-2">{formatDate(new Date(client.registrationDate))}</td>
-                                <td className="py-2">{client.clientType.name}</td>
+                                <td className="py-2">{client.typeClient.name}</td>
                                 {filterByStatus && (
                                 <td>
                                     {client.isDeleted ? (

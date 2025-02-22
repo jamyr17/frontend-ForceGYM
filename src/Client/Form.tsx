@@ -50,8 +50,8 @@ function Form() {
                 navigate('/login', {replace: true})
             }else{
                 await Swal.fire({
-                    title: `Gasto económico ${action}`,
-                    text: `Se ha ${action} el gasto`,
+                    title: `Cliente ${action}`,
+                    text: `Se ha ${action} el cliente`,
                     icon: 'success',
                     confirmButtonText: 'OK',
                     timer: 3000,
@@ -74,28 +74,29 @@ function Form() {
             if (activeClient) {
                 setValue('idClient', activeClient.idClient)
                 setValue('idUser', activeClient.user.idUser)
-                setValue('idTypeClient', activeClient.clientType.idTypeClient)
+                setValue('idTypeClient', activeClient.typeClient.idTypeClient)
                 setValue('registrationDate', activeClient.registrationDate);
                 setValue('emergencyContact', activeClient.emergencyContact);
                 setValue('signatureImage', activeClient.signatureImage);
                 setValue('isDeleted', activeClient.isDeleted);
 
                 // Seteando los valores del HealthQuestionaire
-                setValue('idHealthQuestionaire', activeClient.healthQuestionaire.idHealthQuestionaire);
-                setValue('diabetes', activeClient.healthQuestionaire.diabetes);
-                setValue('hypertension', activeClient.healthQuestionaire.hypertension);
-                setValue('muscleInjuries', activeClient.healthQuestionaire.muscleInjuries);
-                setValue('boneJointIssues', activeClient.healthQuestionaire.boneJointIssues);
-                setValue('balanceLoss', activeClient.healthQuestionaire.balanceLoss);
-                setValue('cardiovascularDisease', activeClient.healthQuestionaire.cardiovascularDisease);
-                setValue('breathingIssues', activeClient.healthQuestionaire.breathingIssues);
-                setValue('isDeleted', activeClient.healthQuestionaire.isDeleted);
+                setValue('idHealthQuestionnaire', activeClient.healthQuestionnaire.idHealthQuestionnaire);
+                setValue('diabetes', activeClient.healthQuestionnaire.diabetes);
+                setValue('hypertension', activeClient.healthQuestionnaire.hypertension);
+                setValue('muscleInjuries', activeClient.healthQuestionnaire.muscleInjuries);
+                setValue('boneJointIssues', activeClient.healthQuestionnaire.boneJointIssues);
+                setValue('balanceLoss', activeClient.healthQuestionnaire.balanceLoss);
+                setValue('cardiovascularDisease', activeClient.healthQuestionnaire.cardiovascularDisease);
+                setValue('breathingIssues', activeClient.healthQuestionnaire.breathingIssues);
+                setValue('isDeleted', activeClient.healthQuestionnaire.isDeleted);
 
-                // Seteando los valores de Person (si existe en ClientDataForm)
+                // Seteando los valores de Person
                 setValue('idPerson', activeClient.person.idPerson);
                 setValue('identificationNumber', activeClient.person.identificationNumber);
                 setValue('name', activeClient.person.name);
                 setValue('firstLastName', activeClient.person.firstLastName);
+                setValue('secondLastName', activeClient.person.secondLastName);
                 setValue('birthday', activeClient.person.birthday);
                 setValue('gender', activeClient.person.gender);
                 setValue('email', activeClient.person.email);
@@ -111,7 +112,7 @@ function Form() {
             onSubmit={handleSubmit(submitForm)}
         >
             <legend className="uppercase text-center text-yellow text-2xl font-black border-b-2 py-2 border-yellow">
-                {activeEditingId ? 'Actualizar gasto' : 'Registrar gasto'}
+                {activeEditingId ? 'Actualizar cliente' : 'Registrar cliente'}
             </legend>
 
             {/* inputs ocultos para la funcionalidad de actualizar */}
@@ -128,12 +129,25 @@ function Form() {
             <input  
                 id="idTypeClient" 
                 type="hidden" 
+                value={1}
                 {...register('idTypeClient')}
+            />
+            <input  
+                id="gender" 
+                type="hidden" 
+                value={'Masculino'}
+                {...register('gender')}
             />
             <input  
                 id="isDeleted" 
                 type="hidden" 
                 {...register('isDeleted')}
+            />
+            <input  
+                id="signatureImage" 
+                type="hidden" 
+                value={'ffiwiw'}
+                {...register('signatureImage')}
             />
 
             {/* Se debe hacer un select para tipo de cliente
@@ -390,6 +404,40 @@ function Form() {
                     </ErrorForm>
                 }
             </div>
+
+            {/* Datos de salud */}
+            <fieldset className="border p-3 mb-5">
+                <legend className="text-lg font-bold">Cuestionario de Salud</legend>
+
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Tiene diabetes?</label>
+                    <input type="checkbox" {...register('diabetes')} />
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Tiene hipertensión?</label>
+                    <input type="checkbox" {...register('hypertension')} />
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Tiene lesiones musculares?</label>
+                    <input type="checkbox" {...register('muscleInjuries')} />
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Tiene problemas óseos o en articulaciones?</label>
+                    <input type="checkbox" {...register('boneJointIssues')} />
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Sufre de pérdida de equilibrio?</label>
+                    <input type="checkbox" {...register('balanceLoss')} />
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Tiene enfermedades cardiovasculares?</label>
+                    <input type="checkbox" {...register('cardiovascularDisease')} />
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-bold">¿Tiene problemas respiratorios?</label>
+                    <input type="checkbox" {...register('breathingIssues')} />
+                </div>
+            </fieldset>
 
             <input type="submit" className="bg-yellow w-full p-3 text-white uppercase font-bold hover:bg-amber-600 cursor-pointer transition-colors" value={activeEditingId ? 'Actualizar' : 'Registrar'} />
         </form> 
